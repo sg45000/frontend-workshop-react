@@ -10,16 +10,18 @@ type Task = {
 }
 
 function App() {
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [tasks, setTasks] = useState<Task[]>([
+    { id: '1', title: 'Task 1', completed: false },
+    { id: '2', title: 'Task 2', completed: true },
+  ])
 
   return (
     <>
       <h1>Todoアプリ</h1>
       <ul>
-        {tasks.map((task) => ())}
-        <li>アイテム1</li>
-        <li>アイテム2</li>
-        <li>アイテム3</li>
+        {
+          tasks.map((task) => <li key={task.id}>{task.title}</li>)
+        }
       </ul>
     </>
   )
