@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 type Task = {
@@ -11,18 +9,40 @@ type Task = {
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([
-    { id: '1', title: 'Task 1', completed: false },
-    { id: '2', title: 'Task 2', completed: true },
   ])
+  const [input, setInput] = useState('')
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) { 
+    event.preventDefault()
+
+    const task: Task = {
+      id: crypto.randomUUID(),
+      title: input,
+      completed: false
+    }
+
+    setTasks([...tasks, task])
+    setInput('')
+  }
 
   return (
     <>
       <h1>Todoアプリ</h1>
       <ul>
         {
-          tasks.map((task) => <li key={task.id}>{task.title}</li>)
+          tasks.length > 0 ?
+          <> {
+            tasks.map((task) => <li key={task.id}> {task.title}</li>)
+          }
+          </>
+          : <p>タスクを追加してください</p>
         }
       </ul>
+
+      <form onSubmit={handleSubmit}>
+        <input type="text" value={input} onChange={(event) => setInput(event.target.value) } />
+        <button type="submit">Add Task</button>
+      </form>
     </>
   )
 }
